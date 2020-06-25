@@ -1,0 +1,88 @@
+#:import ToggleEncryptionButton EncryptionApp.button_widgets.ToggleEncryptionButton
+#:import PerformButton EncryptionApp.button_widgets.PerformButton
+#:import LowerCaseInput EncryptionApp.text_boxes.LowerCaseInput
+#:import OutputText EncryptionApp.text_boxes.OutputText
+#:import Clipboard kivy.core.clipboard.Clipboard
+
+
+<EncryptionScreen>
+  toggle_button: toggle_button
+  perform_button: perform_button
+  input_box: input_box
+  output_box: output_box
+  key_box: key_box
+
+  canvas:
+    Rectangle:
+      size: self.size
+      pos: self.pos
+
+  GridLayout:
+    rows: 3
+    size_hint: 0.25, 1
+    pos_hint: {'right': 1, 'bottom': 1}
+
+    ToggleEncryptionButton:
+      id: toggle_button
+      text_size: self.width, None
+      halign: 'center'
+
+    PerformButton:
+      id: perform_button
+      text_size: self.width, None
+      halign: 'center'
+
+    Button:
+      text: 'Copy To Clipboard'
+      on_press: Clipboard.copy(output_box.text)
+      text_size: self.width, None
+      halign: 'center'
+
+  GridLayout:
+    rows: 3
+    cols: 2
+    size_hint: 0.75, 1
+    pos_hint: {'left': 1}
+
+    DisplayLabel:
+      text: 'Key'
+      size_hint: self.size_hint_x, 0.5
+      min_size: None, 50
+
+    LowerCaseInput:
+      id: key_box
+      size_hint: self.size_hint_x, 0.5
+      min_size: None, 50
+
+
+    DisplayLabel:
+      text: 'Input'
+
+    LowerCaseInput:
+      id: input_box
+
+    DisplayLabel:
+      text: 'Output'
+
+    OutputText:
+      id: output_box
+
+<DisplayLabel@Label>
+  color: 1, 0, 0, 1
+  size_hint: 0.25, 1
+
+  canvas.before:
+    Color:
+      rgba: 0, 0, 0, 0.1
+
+    Rectangle:
+      size: self.size
+      pos: self.pos
+
+    Color:
+      rgba: .5, .5, .5, 1
+
+    Line:
+      width: 1
+      rectangle: self.x + 1, self.y + 1, self.width - 2, self.height - 2
+
